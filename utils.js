@@ -52,9 +52,9 @@ exports.parseCommonServices = function (garage_id, to_display = false) {
 
     if (to_display == true) {
       if (doneDate != "Jamais") {
-        doneDate = TimeToDate(doneDate);
+        doneDate = timeToDate(doneDate);
       }
-      nextDate = TimeToDate(nextDate);
+      nextDate = timeToDate(nextDate);
     }
 
     value.push({
@@ -72,7 +72,7 @@ exports.parseCommonServices = function (garage_id, to_display = false) {
 exports.calculateNextDate = function (garage_id, service, lastDate) {
     let bike = db
     .prepare(
-      "SELECT bike_id, kilometers, usage FROM garage WHERE garage_id = ?"
+      "SELECT bike_id, base_kilometers, usage FROM garage WHERE garage_id = ?"
     )
     .get(garage_id);
 
@@ -88,6 +88,8 @@ exports.calculateNextDate = function (garage_id, service, lastDate) {
         daysToTime(service.kilometers / (bike.usage / 7))
     ).getTime();
   } else {
+    console.log("lastDate : " + lastDate);
+    console.log("regularity : " + service.regularity);
     byDate = new Date(
       new Date(parseInt(lastDate)).getTime() + daysToTime(service.regularity)
     ).getTime();
@@ -103,7 +105,11 @@ exports.calculateNextDate = function (garage_id, service, lastDate) {
     return byDistance;
 };
 
-function TimeToDate(time) {
+exports.calculateCurrentKilometers = function(base_kilometers, weekly_usage, date_added) {
+  return Math.floor(base_kilometers + ((weekly_usage / 7) * timeToDays(new Date().getTime() - new Date(parseInt(date_added)).getTime()))) / 10;
+}
+
+function timeToDate(time) {
   let d = new Date(parseInt(time));
   return d.toLocaleString("fr-FR", {
     weekday: "long",
@@ -116,3 +122,8 @@ function TimeToDate(time) {
 function daysToTime(days) {
   return days * 24 * 60 * 60 * 1000;
 }
+
+function timeToDays(time) {
+  return time / (24 * 60 * 60 * 1000);
+}
+

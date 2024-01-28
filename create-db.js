@@ -20,7 +20,7 @@ let load = function() {
   db.prepare('CREATE TABLE bikes (id INTEGER PRIMARY KEY AUTOINCREMENT, brand TEXT, model TEXT, year TEXT, img TEXT, engine TEXT, power TEXT, weight TEXT, price TEXT, type TEXT)').run();
   db.prepare('CREATE TABLE commonservice (service_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, time TEXT, regularity TEXT, kilometers TEXT, price TEXT, tutorial TEXT)').run();
   db.prepare('CREATE TABLE specificservice (service_id INT, bike INT, name TEXT, description TEXT, time TEXT, regularity TEXT, kilometers TEXT, price TEXT)').run();
-  db.prepare('CREATE TABLE garage (garage_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INT, bike_id INT, kilometers TEXT, usage TEXT, services TEXT, specificservice TEXT)').run();
+  db.prepare('CREATE TABLE garage (garage_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INT, bike_id INT, base_kilometers TEXT, usage TEXT, services TEXT, specificservice TEXT, date_added INT)').run();
 
   let admin = 'admin';
   let adminpassword = 'Quentin';

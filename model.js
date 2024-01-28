@@ -51,7 +51,7 @@ exports.garageDetails = (garage_id) =>
       price : bike.price,
       type : bike.type,
       usage: found.usage,
-      kilometers: found.kilometers
+      kilometers: utils.calculateCurrentKilometers(found.base_kilometers, found.usage, found.date_added)
     };
   } 
   else{
@@ -75,7 +75,10 @@ exports.update = function(id, bike) {
 
 
 exports.addtogarage = function(bike_id, user_id, kilometers, usage){
-  db.prepare('INSERT INTO garage (user_id, bike_id, kilometers, usage, services) VALUES (@user_id, @bike_id, @kilometers, @usage, NULL)').run({user_id: user_id, bike_id: bike_id, kilometers: kilometers, usage: usage});
+  if(usage == null || usage == undefined || usage == "") {usage = Math.trunc(3691/52);}
+  let d = new Date().getTime();
+  db.prepare('INSERT INTO garage (user_id, bike_id, base_kilometers, usage, services, date_added) VALUES (@user_id, @bike_id, @base_kilometers, @usage, NULL, @date_added)').
+  run({user_id: user_id, bike_id: bike_id, base_kilometers: kilometers, usage: usage, date_added: d});
 }
 
 exports.delete = function(id) {
@@ -86,13 +89,15 @@ exports.delete = function(id) {
 
 exports.garage = function(user_id){
 
-  var user_bikes = db.prepare('SELECT bike_id, kilometers, garage_id FROM garage WHERE user_id = ?').all(user_id);
+  var user_bikes = db.prepare('SELECT bike_id, base_kilometers, garage_id, date_added, usage FROM garage WHERE user_id = ?').all(user_id);
 
   var results = [];
 
 
   for(var i = 0; i < user_bikes.length; i++){
     var bike = db.prepare('SELECT * FROM bikes WHERE id = ?').get(user_bikes[i].bike_id);
+
+    console.log("date_ADDED : " + user_bikes[i].date_added);
 
     results[i] = {
       garage_id: user_bikes[i].garage_id,
@@ -106,7 +111,7 @@ exports.garage = function(user_id){
       weight: bike.weight,
       price: bike.price,
       type: bike.type,
-      kilometers: user_bikes[i].kilometers,
+      kilometers: utils.calculateCurrentKilometers(user_bikes[i].base_kilometers, user_bikes[i].usage, user_bikes[i].date_added),
       usage: user_bikes[i].usage
     }
   }
