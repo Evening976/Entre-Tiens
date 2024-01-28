@@ -1,11 +1,12 @@
 "use strict";
 
 const Sqlite = require("better-sqlite3");
-let db = new Sqlite("db.sqlite");
+const db = new Sqlite("db.sqlite");
 
 exports.serviceRegularityToDate = function (days) {
-  let months = days / 30;
-  let years = months / 12;
+  const months = days / 30;
+  const years = months / 12;
+
   let result = "";
 
   if (years >= 1) {
@@ -31,13 +32,13 @@ exports.serviceRegularityToDate = function (days) {
 };
 
 exports.parseCommonServices = function (garage_id, to_display = false) {
-  let bike = db
+  const bike = db
     .prepare("SELECT * FROM garage WHERE garage_id = ?")
     .get(garage_id);
 
   let value = [];
 
-  let services = db.prepare("SELECT * FROM commonservice").all();
+  const services = db.prepare("SELECT * FROM commonservice").all();
   for (let i = 0; i < services.length; i++) {
     let doneDate = "Jamais";
 
@@ -70,7 +71,7 @@ exports.parseCommonServices = function (garage_id, to_display = false) {
 };
 
 exports.calculateNextDate = function (garage_id, service, lastDate) {
-    let bike = db
+    const bike = db
     .prepare(
       "SELECT bike_id, base_kilometers, usage FROM garage WHERE garage_id = ?"
     )

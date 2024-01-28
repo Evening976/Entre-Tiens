@@ -1,15 +1,14 @@
 "use strict"
 /* Serveur pour le site de recettes */
-var express = require('express');
-var mustache = require('mustache-express');
-var cookieSession = require('cookie-session');
-var sqlite = require('better-sqlite3');
+const express = require('express');
+const mustache = require('mustache-express');
+const cookieSession = require('cookie-session');
+const sqlite = require('better-sqlite3');
 
 let db = new sqlite('db.sqlite');
 
-var model = require('./model');
-var utils = require('./utils');
-var app = express();
+const model = require('./model.js');
+const app = express();
 
 // parse form arguments in POST requests
 const bodyParser = require('body-parser');
@@ -66,7 +65,7 @@ function is_authenticated(req, res, next){
 }
 
 function login(name, password){
-  var found = db.prepare('SELECT id, username, level FROM user WHERE username = ? AND password = ?').get(name, password);
+  const found = db.prepare('SELECT id, username, level FROM user WHERE username = ? AND password = ?').get(name, password);
   if(found){
     return found;
   }
@@ -74,7 +73,7 @@ function login(name, password){
 }
 
 function signup(name, password){
-  var newUser = db.prepare('INSERT INTO user (username, password, level) VALUES (?, ?, 1)');
+  const newUser = db.prepare('INSERT INTO user (username, password, level) VALUES (?, ?, 1)');
   return newUser.run(name, password).lastInsertRowid;
 }
 
@@ -87,7 +86,7 @@ app.get('/', (req, res) => {
 
 /* Retourne les résultats de la recherche à partir de la requête "query" */
 app.get('/search', (req, res) => {
-  var found = model.search(req.query.query, req.query.page);
+  const found = model.search(req.query.query, req.query.page);
   res.render('search', found);
 });
 
@@ -106,7 +105,7 @@ app.get('/logout', (req, res) => {
 
 /* Retourne le contenu d'une moto d'identifiant "id" */
 app.get('/read/:id', (req, res) => {
-  var bike_id = model.read(req.params.id);
+  const bike_id = model.read_bike_data(req.params.id);
   res.render('read', bike_id);
 });
 
@@ -115,17 +114,17 @@ app.get('/create', is_authenticated, (req, res) => {
 });
 
 app.get('/update/:id', is_authenticated, (req, res) => {
-  var bike_id = model.read(req.params.id);
+  const bike_id = model.read_bike_data(req.params.id);
   res.render('update', bike_id);
 });
 
 app.get('/delete/:id', is_authenticated, (req, res) => {
-  var entry = model.read(req.params.id);
+  const entry = model.read_bike_data(req.params.id);
   res.render('delete', entry);
 });
 
 app.get('/service/:id', (req,res) => {
-  var entry = model.service(req.params.id);
+  const entry = model.service(req.params.id);
   res.render('service', entry);
 });
 
@@ -134,7 +133,7 @@ app.get('/garage', is_authenticated, (req, res) => {
 });
 
 app.get('/garage/:garage_id', is_authenticated, (req, res) => {
-    var entry = model.garageDetails(req.params.garage_id);
+    let entry = model.garageDetails(req.params.garage_id);
     if(entry == null){
         res.status(404).send('Erreur 404 : Cette moto n\'existe pas');
     }
@@ -146,19 +145,19 @@ app.get('/garage/:garage_id', is_authenticated, (req, res) => {
 /**** Routes pour modifier les données ****/
 
 app.post('/create', is_authenticated, (req, res) => {
-  var id = model.create(post_data_to_bike(req));
+  let id = model.create(post_data_to_bike(req));
   res.redirect('/read/' + id);
 });
 
 app.post('/update/:id', is_authenticated, (req, res) => {
-  var id = req.params.id;
+  let id = req.params.id;
   model.update(id, post_data_to_bike(req));
   res.redirect('/read/' + id);
 });
 
 app.post('/add_to_garage/:id', is_authenticated, (req, res) => {
-    var bike_id = req.params.id;
-    var user_id = req.session.user.id;
+    const bike_id = req.params.id;
+    const user_id = req.session.user.id;
     model.addtogarage(bike_id, user_id, req.body.kilometers, req.body.usage);
 
     res.redirect('/garage');
@@ -170,7 +169,7 @@ app.post('/delete/:id', is_authenticated, (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  var id = signup(req.body.username, req.body.password);
+  const id = signup(req.body.username, req.body.password);
   if(id != -1){
     req.session.user = {id: id, username: req.body.username, level: 1};
     res.redirect('/');
@@ -181,8 +180,8 @@ app.post('/signup', (req, res) => {
 });
 
 app.post('/garage/:id', is_authenticated, (req, res) => {
-    var service_id = req.body.service_id;
-    var garage_id = req.params.id;
+    const service_id = req.body.service_id;
+    const garage_id = req.params.id;
     model.markServiceAsDone(service_id, garage_id);
 
     res.redirect('/garage/' + garage_id);
@@ -190,7 +189,7 @@ app.post('/garage/:id', is_authenticated, (req, res) => {
 
 
 app.post('/login', (req, res) => {
-  var account = login(req.body.username, req.body.password);
+  const account = login(req.body.username, req.body.password);
 
   if(account != -1){
     req.session.user = {id: account.id, username: req.body.username, level: account.level};

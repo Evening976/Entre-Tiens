@@ -59,5 +59,16 @@
         "weight": "205",
         "price":"6500",
         "type":"Roadster"
+    },
+    {
+        "brand":"Husqvarna",
+        "model":"701",
+        "year": "2021",
+        "img":"https://www.nikkodesign.be/wp-content/uploads/2021/02/husqvarna701-sm-fluo-3-1024x675.jpg",
+        "engine": "693",
+        "power": "74",
+        "weight": "205",
+        "price":"11000",
+        "type":"Supermotard"
     }
 ]

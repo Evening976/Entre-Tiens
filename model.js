@@ -3,16 +3,16 @@
 const Sqlite = require('better-sqlite3');
 
 let db = new Sqlite('db.sqlite');
-var utils = require('./utils');
+const utils = require('./utils');
 
 
-exports.read = (id) => {
-  var found = db.prepare('SELECT * FROM bikes WHERE id = ?').get(id);
+exports.read_bike_data = (id) => {
+  const found = db.prepare('SELECT * FROM bikes WHERE id = ?').get(id);
 
   if(found !== undefined) {
     found.services = db.prepare('SELECT name, description, time, regularity, kilometers, price FROM specificservice WHERE bike = ?').all(id);
 
-    for(var i = 0; i < found.services.length; i++){
+    for(let i = 0; i < found.services.length; i++){
       found.services[i].regularity = utils.serviceRegularityToDate(found.services[i].regularity);
     }
 
@@ -23,7 +23,7 @@ exports.read = (id) => {
 };
 
 exports.service = (id) => {
-  var found = db.prepare('SELECT * FROM commonservice WHERE service_id = ?').get(id);
+  const found = db.prepare('SELECT * FROM commonservice WHERE service_id = ?').get(id);
 
   if(found !== undefined) {
     return found;
@@ -34,9 +34,9 @@ exports.service = (id) => {
 
 exports.garageDetails = (garage_id) =>
 {
-  var found = db.prepare('SELECT * FROM garage WHERE garage_id = ?').get(garage_id);
+  const found = db.prepare('SELECT * FROM garage WHERE garage_id = ?').get(garage_id);
   if(found !== undefined) {
-    var bike = db.prepare('SELECT * FROM bikes WHERE id = ?').get(found.bike_id);
+    const bike = db.prepare('SELECT * FROM bikes WHERE id = ?').get(found.bike_id);
     return {
       garage_id: found.garage_id,
       services: utils.parseCommonServices(garage_id, true),
@@ -60,13 +60,13 @@ exports.garageDetails = (garage_id) =>
 };
 
 exports.create = function(bike) {
-  var id = db.prepare('INSERT INTO bikes (brand, model, year, img, engine, power, weight, price, type) VALUES (@brand, @model, @year, @img, @engine, @power, @weight, @price, @type)').run(bike).lastInsertRowid;
+  const id = db.prepare('INSERT INTO bikes (brand, model, year, img, engine, power, weight, price, type) VALUES (@brand, @model, @year, @img, @engine, @power, @weight, @price, @type)').run(bike).lastInsertRowid;
   return id;
 }
 
 
 exports.update = function(id, bike) {
-  var result = db.prepare('UPDATE bikes SET brand = @brand, model = @model, year = @year, img = @img, engine = @engine, power = @power, weight = @weight, price = @price, type = @type WHERE id = ?').run(bike, id);
+  const result = db.prepare('UPDATE bikes SET brand = @brand, model = @model, year = @year, img = @img, engine = @engine, power = @power, weight = @weight, price = @price, type = @type WHERE id = ?').run(bike, id);
   if(result.changes == 1) {
     return true;
   }
@@ -89,13 +89,13 @@ exports.delete = function(id) {
 
 exports.garage = function(user_id){
 
-  var user_bikes = db.prepare('SELECT bike_id, base_kilometers, garage_id, date_added, usage FROM garage WHERE user_id = ?').all(user_id);
+  const user_bikes = db.prepare('SELECT bike_id, base_kilometers, garage_id, date_added, usage FROM garage WHERE user_id = ?').all(user_id);
 
-  var results = [];
+  let results = [];
 
 
-  for(var i = 0; i < user_bikes.length; i++){
-    var bike = db.prepare('SELECT * FROM bikes WHERE id = ?').get(user_bikes[i].bike_id);
+  for(let i = 0; i < user_bikes.length; i++){
+    const bike = db.prepare('SELECT * FROM bikes WHERE id = ?').get(user_bikes[i].bike_id);
 
     console.log("date_ADDED : " + user_bikes[i].date_added);
 
@@ -125,11 +125,11 @@ exports.garage = function(user_id){
 
 
 exports.markServiceAsDone = (service_id, garage_id) => {
-  let service_infos = db.prepare('SELECT * FROM commonservice WHERE service_id = ?').get(service_id);
+  const service_infos = db.prepare('SELECT * FROM commonservice WHERE service_id = ?').get(service_id);
 
   let services = utils.parseCommonServices(garage_id, false);
-  let service = services.find(service => service.service_id == service_id);
-  let date = new Date().getTime();
+  const service = services.find(service => service.service_id == service_id);
+  const date = new Date().getTime();
   
   let newService = {
       service_id: service.service_id,
@@ -148,9 +148,9 @@ exports.search = (query, page) => {
   query = query || "";
   page = parseInt(page || 1);
  
-  var num_found = db.prepare('SELECT count(*) FROM bikes WHERE model LIKE ?').get('%' + query + '%')['count(*)'];
-  var results = db.prepare('SELECT id as bike_id, brand, model, year, img, engine, power, weight, price, type FROM bikes WHERE model LIKE ? ORDER BY id LIMIT ? OFFSET ?').all('%' + query + '%', num_per_page, (page - 1) * num_per_page);
-  var num_pages = parseInt(num_found / num_per_page) + 1;
+  const num_found = db.prepare('SELECT count(*) FROM bikes WHERE model LIKE ?').get('%' + query + '%')['count(*)'];
+  const results = db.prepare('SELECT id as bike_id, brand, model, year, img, engine, power, weight, price, type FROM bikes WHERE model LIKE ? ORDER BY id LIMIT ? OFFSET ?').all('%' + query + '%', num_per_page, (page - 1) * num_per_page);
+  const num_pages = parseInt(num_found / num_per_page) + 1;
 
   return {
     results: results,

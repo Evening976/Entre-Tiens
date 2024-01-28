@@ -3,9 +3,9 @@
 const fs = require('fs');
 const Sqlite = require('better-sqlite3');
 
-let db = new Sqlite('db.sqlite');
+const db = new Sqlite('db.sqlite');
 
-let load = function() {
+const load = function() {
 
   const bikes = JSON.parse(fs.readFileSync('data/bikes.json'));
   const common_services = JSON.parse(fs.readFileSync('data/common_services.json'));
@@ -22,13 +22,13 @@ let load = function() {
   db.prepare('CREATE TABLE specificservice (service_id INT, bike INT, name TEXT, description TEXT, time TEXT, regularity TEXT, kilometers TEXT, price TEXT)').run();
   db.prepare('CREATE TABLE garage (garage_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INT, bike_id INT, base_kilometers TEXT, usage TEXT, services TEXT, specificservice TEXT, date_added INT)').run();
 
-  let admin = 'admin';
-  let adminpassword = 'Quentin';
+  const admin = 'admin';
+  const adminpassword = 'admin';
   db.prepare('INSERT INTO user (username, password, level) VALUES (@username, @password, @level)').run({username: admin, password: adminpassword, level: 0});
 
-  let bikeInsert = db.prepare('INSERT INTO bikes VALUES (@id, @brand, @model, @year, @img, @engine, @power, @weight, @price, @type)');
-  let common_servicesInsert = db.prepare('INSERT INTO commonservice VALUES (@service_id, @name, @description, @time, @regularity, @kilometers, @price, @tutorial)');
-  let specific_ServicesInsert = db.prepare('INSERT INTO specificservice VALUES (@service_id, @bike, @name, @description, @time, @regularity, @kilometers, @price)');
+  const bikeInsert = db.prepare('INSERT INTO bikes VALUES (@id, @brand, @model, @year, @img, @engine, @power, @weight, @price, @type)');
+  const common_servicesInsert = db.prepare('INSERT INTO commonservice VALUES (@service_id, @name, @description, @time, @regularity, @kilometers, @price, @tutorial)');
+  const specific_ServicesInsert = db.prepare('INSERT INTO specificservice VALUES (@service_id, @bike, @name, @description, @time, @regularity, @kilometers, @price)');
 
 
   let transaction = db.transaction((bikes, common_services) => {
