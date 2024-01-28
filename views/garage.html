@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mon garage - Safe'Rider</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    {{>header}}
+
+    <div class="container py-5">
+      <div class="px-0 py-1">
+        <h1>Garage de {{username}}</h1>
+      </div>
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+        {{^garage}}
+        <div class="container-fluid w-auto">
+          <div class="col">
+            <div class="card h-100 shadow-sm mb-3">
+              <div class="card-body">
+                <div class="card-title">
+                  <p>Vous n'avez pas encore ajouté de moto à votre garage.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <form method="get" action="/search">
+            <button
+              class="btn btn-primary w-auto"
+              style="text-decoration: none"
+            >
+              Ajouter un véhicule à mon garage
+            </button>
+          </form>
+        </div>
+        {{/garage}} {{#garage}}
+        <div class="col">
+          <a
+            href="/garage/{{garage_id}}"
+            class="text-primary-emphasis"
+            style="text-decoration: none"
+          >
+            <div class="card h-100 shadow-sm mb-2">
+              <img class="card-img-top" src="{{img}}" />
+
+              <div class="card-body">
+                <div class="card-title">
+                  <p>{{brand}} {{model}}, {{year}}</p>
+                </div>
+                <div class="card-subtitle">
+                  <p>Kilomètres au compteur : {{kilometers}}km</p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        {{/garage}}
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

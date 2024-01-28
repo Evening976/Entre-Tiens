@@ -1,0 +1,63 @@
+[
+    {
+        "brand":"KTM",
+        "model":"390 Duke",
+        "year": "2021",
+        "img": "https://live.staticflickr.com/65535/52550629112_b14fef6c05_b.jpg",
+        "engine": "373.2",
+        "power": "43.5",
+        "weight": "150",
+        "price":"6140",
+        "type":"Naked",
+        "services":[
+            {
+                "name":"Graissage de la chaîne KTM",
+                "description":"Graisser la chaîne de transmission TRES SPECIFIQUE DE KTM !",
+                "time":"10 min",
+                "regularity":"60",
+                "kilometers":"1000",
+                "price":"10"
+            },
+            {
+                "name":"Nettoyage du filtre à air KTM",
+                "description":"Nettoyer le filtre à air TRES SPECIFIQUE DE KTM !",
+                "time":"10 min",
+                "regularity":"60",
+                "kilometers":"1000",
+                "price":"10"
+            }
+        ]
+    },
+    {
+        "brand":"Yamaha",
+        "model":"MT-07",
+        "year": "2021",
+        "img": "https://images.caradisiac.com/images/6/2/2/4/186224/S8-yamaha-presente-la-mt-07-2021-651246.jpg",
+        "engine": "689",
+        "power": "74",
+        "weight": "184",
+        "price":"7299",
+        "type":"Naked",
+        "services":[
+            {
+                "name":"Graissage de la chaîne YAMAHA",
+                "description":"Graisser la chaîne de transmission TRES SPECIFIQUE DE YAMAHA !",
+                "time":"10 min",
+                "regularity":"60",
+                "kilometers":"1000",
+                "price":"10"
+            }
+        ]
+    },
+    {
+        "brand":"Kawasaki",
+        "model":"ER6N",
+        "year": "2012",
+        "img":"https://acidmoto.ch/cms/sites/default/files/img/alpha/k/kawasakier6n2012-51.jpg?itok=zFUw8nfo",
+        "engine": "650",
+        "power": "72",
+        "weight": "205",
+        "price":"6500",
+        "type":"Roadster"
+    }
+]

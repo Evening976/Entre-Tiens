@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ajouter un véhicule</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    {{> header}}
+    <form action="/update/{{id}}" method="post">
+      <div class="container py-5">
+        <div class="mb-3 card">
+          <br />
+          <div class="ms-1 row">
+            <h1 class="fs-1">Modifier une moto</h1>
+
+            <div class="col-8 rounded-3 py-4">
+              <p>
+                Marque :
+                <input
+                  type="text"
+                  name="brand"
+                  placeholder="Marque de la moto"
+                  value="{{brand}}"
+                />
+              </p>
+              <p>
+                Modèle :
+                <input
+                  type="text"
+                  name="model"
+                  placeholder="Modèle de la moto"
+                  value="{{model}}"
+                />
+              </p>
+              <p>
+                Cylindrée :
+                <input
+                  type="text"
+                  name="engine"
+                  placeholder="Cylindrée de la moto"
+                  value="{{engine}}"
+                />
+              </p>
+              <p>
+                Puissance :
+                <input
+                  name="power"
+                  rows="4"
+                  placeholder="Puissance (en ch.) de la moto"
+                  value="{{power}}"
+                  />
+              </p>
+              <p>
+                Prix :
+                <input class="mx-4"
+                  type="text"
+                  name="price"
+                  placeholder="Prix (en €) de la moto"
+                  value="{{price}}"
+                />
+              </p>
+            </div>
+
+            <div class="col-3 py-4">
+              <p>
+                Année :
+                <input
+                  type="text"
+                  name="year"
+                  placeholder="Année durant laquelle la moto est sortie"
+                  value="{{year}}"
+                />
+              </p>
+              <p>
+                Image :
+                <textarea
+                  name="img"
+                  rows="2"
+                  placeholder="Lien vers une photo de la moto"
+                  >{{img}}</textarea>
+              </p>
+              <p>
+                Poids :
+                <input
+                  name="weight"
+                  rows="4"
+                  placeholder="Poids de la moto"
+                  value="{{weight}}"
+                  />
+              </p>
+              <p>
+                Type :
+                <input
+                  name="type"
+                  rows="4"
+                  placeholder="Type de la moto"
+                  value="{{type}}"
+                  />
+              </p>
+            </div>
+          </div>      
+         </div>
+         <div class="mx-auto">
+          <button type="submit" class="btn btn-primary">Modifier</button>
+          <a href="/read/{{id}}">Annuler</a>
+          </div>
+      </div>
+         
+      </div>
+    </form>
+
+    <div class="position-absolute bottom-0 start-0">{{> footer}}</div>
+  </body>
+</html>

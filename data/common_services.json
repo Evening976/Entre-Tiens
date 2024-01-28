@@ -1,0 +1,65 @@
+[
+    {
+        "name":"Graissage de la chaîne",
+        "description":"Graisser la chaîne de transmission",
+        "time":"10 min",
+        "regularity":"60",
+        "kilometers":"1000",
+        "price":"10",
+        "tutorial":"https://www.youtube.com/embed/alr6urpUxyc"
+    },
+    {
+        "name":"Tension de la chaîne",
+        "description":"Vérifier la tension de la chaîne",
+        "time":"15 mins",
+        "regularity":"90",
+        "kilometers":"2000",
+        "price":"0",
+        "tutorial":"https://www.youtube.com/embed/alr6urpUxyc"
+    },
+    {
+        "name":"Usure du pneu arrière",
+        "description":"Vérifier l'usure du pneu arrière",
+        "time":"5 mins",
+        "regularity":"547",
+        "kilometers":"5000",
+        "price":"100",
+        "tutorial":"https://www.youtube.com/embed/mSl9vsYM43Q"
+    },
+    {
+        "name":"Contrôle des plaquettes et disques de frein",
+        "description":"Vérifier l'usure des plaquettes et disques de frein",
+        "time":"15 mins",
+        "regularity":"547",
+        "kilometers":"10000",
+        "price":"100",
+        "tutorial":"https://www.youtube.com/embed/tOrMLiUo1Ps"
+    },
+    {
+        "name":"Pression des pneus",
+        "description":"Vérifier la pression des pneus",
+        "time":"5 mins",
+        "regularity":"30",
+        "kilometers":"500",
+        "price":"2",
+        "tutorial":"https://www.youtube.com/embed/RG0zhJTcd0A"
+    },
+    {
+        "name":"Changement de l'huile",
+        "description":"Changer l'huile du moteur",
+        "time":"30 min",
+        "regularity":"547",
+        "kilometers":"10000",
+        "price":"30",
+        "tutorial":"https://www.youtube.com/embed/GbXKf0-Zwgc"
+    },
+    {
+        "name":"Liquide de frein",
+        "description":"Changement du liquide de frein",
+        "time":"30 min",
+        "regularity":"547",
+        "kilometers":"20000",
+        "price":"30",
+        "tutorial":"https://www.youtube.com/embed/AGRmyfmIgSY"
+    }
+]
