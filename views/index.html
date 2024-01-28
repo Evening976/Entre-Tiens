@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Safe'Rider</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  </head>
+
+<body>
+  {{> header}}
+
+  <div class="p-5 mb-4 text-bg-light">
+  {{#authenticated}}
+  <ul>
+  <li class="nav-item dropdown">
+    <a class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; color:inherit;">
+      Moi
+    </a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/garage">Mon garage</a></li>
+    <li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>
+  </ul>
+  </li>
+  </ul>
+{{/authenticated}}
+
+{{^authenticated}}
+<ul>
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Connexion
+  </a>
+<ul class="dropdown-menu">
+  <li><a class="dropdown-item" href="/login">Se connecter</a></li>
+  <li><a class="dropdown-item" href="/signup">S'inscrire</a></li>
+</ul>
+</li>
+</div>
+</ul>
+{{/authenticated}}
+
+    <div class="container-fluid py-5 text-center">
+      <img class="col-md-8 fs-4 img-fluid rounded" src="https://img.freepik.com/photos-gratuite/moto-rouge-route_114579-5071.jpg?w=1380&t=st=1679625845~exp=1679626445~hmac=a3cd3d8fe6b330a41ada9e7e6fc1b101cb287fd55e0b6703082e7216f90972e1">
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

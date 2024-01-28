@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ma {{model}} - Safe'Rider</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    {{> header}}
+
+    <div class="container mt-5">
+      <h1>Détails de ma moto</h1>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <img src="{{img}}" class="img-fluid" />
+        </div>
+
+        <div class="col-md-6">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th>Nom</th>
+                <td>{{brand}}</td>
+              </tr>
+              <tr>
+                <th>Modèle</th>
+                <td>{{model}}</td>
+              </tr>
+              <tr>
+                <th>Année</th>
+                <td>{{year}}</td>
+              </tr>
+              <tr>
+                <th>Puissance</th>
+                <td>{{power}}ch.</td>
+              </tr>
+              <tr>
+                <th>Coût</th>
+                <td>{{price}}€</td>
+              </tr>
+              <tr>
+                <th>Kilométrage</th>
+                <td>{{kilometers}} km</td>
+              </tr>
+              <tr>
+                <th>Utilisation moyenne</th>
+                <td>{{usage}} km/semaine</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+        <hr>
+        <div class="row">
+
+          <div class="accordion">
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseServiceComing" aria-expanded="false" aria-controls="collapseServiceComing">
+                  Carnet d'entretien
+                </button>
+              </h2>
+              <div id="collapseServiceComing" class="accordion-collapse collapse" data-bs-parent="#accordionParent">
+                <div class="accordion-body">
+
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Prochaine date estimée</th>
+                          <th>Intervention</th>
+                          <th>Coût estimé</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {{#services}}
+                        <tr>
+                          <td>{{doneDate}}</td>
+                          <td>{{nextDate}}</td>
+                          <td><a href="/service/{{service_id}}">{{name}}</a></td>
+                          <td>{{price}} €</td>
+                            <td>        <form class="d-flex" role="button" method="post" action="/garage/{{garage_id}}">
+                              <input type="hidden" name="service_id" value="{{service_id}}">
+                            <button class="btn btn-secondary bg-success" type="submit">&check;</button>
+                          </form>
+                            </td>
+                        </tr>
+                        {{/services}}
+                      </tbody>
+                    </table>
+                  
+                </div>
+              </div>  
+            </div>
+
+
+        
+      </div>
+  </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
