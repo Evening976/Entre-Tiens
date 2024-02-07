@@ -35,18 +35,18 @@ function session_valid(req, res, next){
     res.locals.name = req.session.user.username;
     res.locals.admin = !(req.session.user.level);
   }
-  
+
   next();
 }
 
 function post_data_to_bike(req) {
     return {
-      brand: req.body.brand, 
+      brand: req.body.brand,
       model: req.body.model,
       year: req.body.year,
 
       img: req.body.img,
-      
+
       engine: req.body.engine,
       power: req.body.power,
       weight: req.body.weight,
@@ -105,7 +105,7 @@ app.get('/logout', (req, res) => {
 
 /* Retourne le contenu d'une moto d'identifiant "id" */
 app.get('/read/:id', (req, res) => {
-  const bike_id = model.read_bike_data(req.params.id);
+  let bike_id = model.read_bike_data(req.params.id);
   res.render('read', bike_id);
 });
 
@@ -129,7 +129,7 @@ app.get('/service/:id', (req,res) => {
 });
 
 app.get('/garage', is_authenticated, (req, res) => {
-    res.render('garage', model.garage(req.session.user.id));
+    res.render('garage', model.garage(req.session.user.id, req.session.user.username));
 });
 
 app.get('/garage/:garage_id', is_authenticated, (req, res) => {

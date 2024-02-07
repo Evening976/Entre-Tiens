@@ -4,8 +4,8 @@ const Sqlite = require("better-sqlite3");
 const db = new Sqlite("db.sqlite");
 
 exports.serviceRegularityToDate = function (days) {
-  const months = days / 30;
-  const years = months / 12;
+  let months = days / 30;
+  let years = months / 12;
 
   let result = "";
 
@@ -102,12 +102,20 @@ exports.calculateNextDate = function (garage_id, service, lastDate) {
 
   if (byDate < byDistance) {
     return byDate;
-  } 
+  }
     return byDistance;
 };
 
 exports.calculateCurrentKilometers = function(base_kilometers, weekly_usage, date_added) {
   return Math.floor(base_kilometers + ((weekly_usage / 7) * timeToDays(new Date().getTime() - new Date(parseInt(date_added)).getTime()))) / 10;
+}
+
+exports.getPronoun = function(username){
+  let voyels = ['A', 'E', 'I', 'O', 'U', 'Y'];
+  if(voyels.includes(username.charAt(0).toUpperCase()) || username.charAt(0).toLowerCase()){
+    return "d'";
+  }
+  return "de ";
 }
 
 function timeToDate(time) {
@@ -119,6 +127,7 @@ function timeToDate(time) {
     day: "numeric",
   });
 }
+
 
 function daysToTime(days) {
   return days * 24 * 60 * 60 * 1000;

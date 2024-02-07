@@ -17,19 +17,21 @@
       </div>
     </div>
 
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+  <div class="row row-cols-4 row-cols-sm-4 row-cols-md-4 g-3">
       {{#results}}
         <div class="col">
         <a href="/read/{{bike_id}}" class="text-primary-emphasis" style="text-decoration: none;">
-          <div class="card h-100 shadow-sm mb-2">
-            <img class="card-img-top" src="{{img}}">
-            
+          <div class="card h-125 w-100 shadow-sm mb-2">
+            <img class="card-img-top" src="{{img}}" style="height: 42%;">
+
             <div class="card-body">
               <div class="card-title">
                 <p>{{brand}} {{model}}</p>
               </div>
-              <div class="card-subtitle">
-                <p>Année : {{year}} - {{engine}}cc, {{power}}hp</p>
+              <hr></hr>
+              <div class="card-subtitle" style="padding-bottom: 5%;">
+                <p>Année : {{year}}</p>
+                <p>Cylindrée : {{engine}}cc, {{power}}hp</p>
               </div>
             </div>
           </div>

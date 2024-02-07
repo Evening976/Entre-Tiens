@@ -7,7 +7,7 @@ const utils = require('./utils');
 
 
 exports.read_bike_data = (id) => {
-  const found = db.prepare('SELECT * FROM bikes WHERE id = ?').get(id);
+  let found = db.prepare('SELECT * FROM bikes WHERE id = ?').get(id);
 
   if(found !== undefined) {
     found.services = db.prepare('SELECT name, description, time, regularity, kilometers, price FROM specificservice WHERE bike = ?').all(id);
@@ -53,7 +53,7 @@ exports.garageDetails = (garage_id) =>
       usage: found.usage,
       kilometers: utils.calculateCurrentKilometers(found.base_kilometers, found.usage, found.date_added)
     };
-  } 
+  }
   else{
     return null;
   }
@@ -87,7 +87,7 @@ exports.delete = function(id) {
 }
 
 
-exports.garage = function(user_id){
+exports.garage = function(user_id, username){
 
   const user_bikes = db.prepare('SELECT bike_id, base_kilometers, garage_id, date_added, usage FROM garage WHERE user_id = ?').all(user_id);
 
@@ -112,15 +112,15 @@ exports.garage = function(user_id){
       price: bike.price,
       type: bike.type,
       kilometers: utils.calculateCurrentKilometers(user_bikes[i].base_kilometers, user_bikes[i].usage, user_bikes[i].date_added),
-      usage: user_bikes[i].usage
+      usage: user_bikes[i].usage,
     }
   }
 
   return {
-    username: db.prepare('SELECT username FROM user WHERE id = ?').get(user_id).username,
+    username: utils.getPronoun(username) + username,
     bikes_id: user_bikes,
     garage: results
-  } 
+  }
 }
 
 
@@ -130,7 +130,7 @@ exports.markServiceAsDone = (service_id, garage_id) => {
   let services = utils.parseCommonServices(garage_id, false);
   const service = services.find(service => service.service_id == service_id);
   const date = new Date().getTime();
-  
+
   let newService = {
       service_id: service.service_id,
       name: service.name,
@@ -147,14 +147,14 @@ exports.search = (query, page) => {
   const num_per_page = 32;
   query = query || "";
   page = parseInt(page || 1);
- 
+
   const num_found = db.prepare('SELECT count(*) FROM bikes WHERE model LIKE ?').get('%' + query + '%')['count(*)'];
   const results = db.prepare('SELECT id as bike_id, brand, model, year, img, engine, power, weight, price, type FROM bikes WHERE model LIKE ? ORDER BY id LIMIT ? OFFSET ?').all('%' + query + '%', num_per_page, (page - 1) * num_per_page);
   const num_pages = parseInt(num_found / num_per_page) + 1;
 
   return {
     results: results,
-    num_found: num_found, 
+    num_found: num_found,
     query: query,
     next_page: ((page + 1) <= num_pages) ? page + 1 : null,
     page: page,
