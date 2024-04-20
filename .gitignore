@@ -134,3 +134,6 @@ package-lock.json
 
 #db
 .sqlite
+
+#vscode
+.vscode
